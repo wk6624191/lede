@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI
+name: Chainedbox
 
 on:
    push:
@@ -26,7 +26,7 @@ jobs:
 
     steps:
 
-      - name: Chainedbox
+      - name: Checkout
         uses: actions/checkout@master
         with:
           ref: master
@@ -34,7 +34,7 @@ jobs:
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
-        run: 
+        run: |
           docker rmi `docker images -q`
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
@@ -54,12 +54,12 @@ jobs:
           df -h
 
       - name: Update feeds
-        run: 
+        run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: Generate configuration file
-        run: 
+        run: |
           rm -f ./.config*
           touch ./.config
 
