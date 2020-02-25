@@ -10,9 +10,9 @@
 name: OpenWrt-CI
 
 on:
-  #push:
-   # branches: 
-     # - master
+   push:
+     branches: 
+       - master
     schedule:
       - cron: 0 20 * * *
   # release:
@@ -26,7 +26,7 @@ jobs:
 
     steps:
 
-      - name: Checkout
+      - name: Chainedbox
         uses: actions/checkout@master
         with:
           ref: master
@@ -34,7 +34,7 @@ jobs:
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
-        run: Chainedbox
+        run: 
           docker rmi `docker images -q`
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
